@@ -1,10 +1,10 @@
 from types import TracebackType
 from typing import Type
 
-from config import PostgresDsn
-from domain.interfaces import AbstractUnitOfWork
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+from src.config import PostgresDsn
+from src.domain.interfaces import AbstractUnitOfWork
 
 
 class UnitOfWork(AbstractUnitOfWork):

@@ -1,7 +1,6 @@
 from dependency_injector import containers, providers
 from dependency_injector.containers import DeclarativeContainer
-
-from backend.config import Settings
+from src.config import Settings
 
 app_config = Settings()
 

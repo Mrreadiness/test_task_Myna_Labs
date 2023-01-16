@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-
-from backend.container import container
+from src.container import container
 
 
 def create_app() -> FastAPI:
