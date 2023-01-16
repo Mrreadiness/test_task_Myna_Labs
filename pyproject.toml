@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "test-task-nlp"
+version = "0.1.0"
+description = ""
+authors = ["Ivan Moiseev"]
+readme = "README.md"
+packages = [{include = "test_task_nlp"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
