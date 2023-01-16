@@ -8,6 +8,10 @@ packages = [{include = "test_task_nlp"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+fastapi = "^0.89.1"
+pydantic = {extras = ["dotenv"], version = "^1.10.4"}
+dependency-injector = "^4.41.0"
+SQLAlchemy = { version = ">=1.4,<2", extras = ["asyncio", "mypy"] }
 
 
 [build-system]
