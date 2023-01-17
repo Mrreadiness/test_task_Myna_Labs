@@ -2,8 +2,12 @@ import abc
 from types import TracebackType
 from typing import Type
 
+from src.domain.use_cases.interfaces import IUserRepository
+
 
 class AbstractUnitOfWork(abc.ABC):
+    user: IUserRepository
+
     @abc.abstractmethod
     async def commit(self) -> None:
         ...
