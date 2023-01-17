@@ -19,13 +19,14 @@ async def create_user(
     return UserOutSchema.from_orm(await use_case(in_schema.username))
 
 
-@router.post("/send_message")
+@router.post("/{user_id}/send_message")
 @inject
 async def send_message(
+    user_id: uuid.UUID,
     in_schema: SendMessageInSchema,
     use_case: ISendMessage = Depends(Provide["send_message"]),
 ) -> None:
-    await use_case(in_schema.user_id, in_schema.message)
+    await use_case(user_id, in_schema.message)
 
 
 @router.get("/{user_id}/messages")

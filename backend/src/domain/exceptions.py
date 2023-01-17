@@ -11,8 +11,10 @@ class DialogAlreadyExistException(BaseDomainException):
 
 
 class DialogNotFoundException(BaseDomainException):
+    status: int = 404
     message = "Dialog not found"
 
 
 class UserNotFoundException(BaseDomainException):
-    message = "Dialog not found"
+    status: int = 404
+    message = "User not found"

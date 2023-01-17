@@ -17,7 +17,6 @@ class UserOutSchema(BaseModel):
 
 
 class SendMessageInSchema(BaseModel):
-    user_id: uuid.UUID
     message: str
 
 
