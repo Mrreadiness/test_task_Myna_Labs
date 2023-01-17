@@ -12,3 +12,7 @@ class DialogAlreadyExistException(BaseDomainException):
 
 class DialogNotFoundException(BaseDomainException):
     message = "Dialog not found"
+
+
+class UserNotFoundException(BaseDomainException):
+    message = "Dialog not found"
