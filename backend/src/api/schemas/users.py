@@ -1,3 +1,4 @@
+import datetime
 import uuid
 
 from pydantic import BaseModel
@@ -18,3 +19,12 @@ class UserOutSchema(BaseModel):
 class SendMessageInSchema(BaseModel):
     user_id: uuid.UUID
     message: str
+
+
+class MessageOutSchema(BaseModel):
+    id: uuid.UUID
+    value: str
+    created: datetime.datetime
+
+    class Config:
+        orm_mode = True

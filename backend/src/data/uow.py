@@ -4,6 +4,7 @@ from typing import Type
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from src.config import PostgresDsn
+from src.data.repositories.messages import MessagesRepository
 from src.data.repositories.users import UserRepository
 from src.domain.interfaces import AbstractUnitOfWork
 
@@ -23,6 +24,7 @@ class UnitOfWork(AbstractUnitOfWork):
         await super().__aenter__()
         self.session: AsyncSession = self.session_factory()
         self.users = UserRepository(self.session)
+        self.messages = MessagesRepository(self.session)
 
     async def __aexit__(
         self,

@@ -3,6 +3,7 @@ from dependency_injector.containers import DeclarativeContainer
 from src.config import Settings
 from src.data.uow import UnitOfWork
 from src.domain.use_cases.create_user import CreateUser
+from src.domain.use_cases.get_messages import GetMessages
 from src.domain.use_cases.send_message import SendMessage
 
 app_config = Settings()
@@ -15,6 +16,7 @@ class Container(DeclarativeContainer):
     uow: UnitOfWork = providers.Factory(UnitOfWork, dsn=config.database.dsn)
     create_user: CreateUser = providers.Factory(CreateUser, uow=uow)
     send_message: SendMessage = providers.Factory(SendMessage, uow=uow)
+    get_messages: GetMessages = providers.Factory(GetMessages, uow=uow)
 
 
 container = Container()

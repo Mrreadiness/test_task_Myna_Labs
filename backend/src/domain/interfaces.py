@@ -2,11 +2,12 @@ import abc
 from types import TracebackType
 from typing import Type
 
-from src.domain.use_cases.interfaces import IUserRepository
+from src.domain.use_cases.interfaces import IMessagesRepository, IUserRepository
 
 
 class AbstractUnitOfWork(abc.ABC):
     users: IUserRepository
+    messages: IMessagesRepository
 
     @abc.abstractmethod
     async def commit(self) -> None:
