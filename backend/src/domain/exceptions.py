@@ -8,3 +8,7 @@ class BaseDomainException(Exception):
 
 class DialogAlreadyExistException(BaseDomainException):
     message = "Dialog already exist"
+
+
+class DialogNotFoundException(BaseDomainException):
+    message = "Dialog not found"
