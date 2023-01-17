@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from src.api.routers import users
 from src.container import container
 
 
@@ -8,7 +9,7 @@ def create_app() -> FastAPI:
         root_path=container.config.app.root_path(),
         debug=container.config.app.debug(),
     )
-    application.container = container
+    application.include_router(users.router)
     return application
 
 
