@@ -11,9 +11,9 @@ from src.domain.interfaces import AbstractUnitOfWork
 
 class UnitOfWork(AbstractUnitOfWork):
     def __init__(self, dsn: PostgresDsn):
-        engine = create_async_engine(dsn)
+        self.engine = create_async_engine(dsn)
         self.session_factory = sessionmaker(
-            engine,
+            self.engine,
             autoflush=True,
             autocommit=False,
             expire_on_commit=False,

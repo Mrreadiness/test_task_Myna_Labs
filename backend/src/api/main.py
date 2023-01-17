@@ -9,7 +9,7 @@ def create_app() -> FastAPI:
         root_path=container.config.app.root_path(),
         debug=container.config.app.debug(),
     )
-    application.include_router(users.router)
+    application.include_router(users.router, tags=["User"])
     return application
 
 
