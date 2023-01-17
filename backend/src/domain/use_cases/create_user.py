@@ -10,8 +10,8 @@ class CreateUser(ICreateUser):
     async def __call__(self, username: str) -> User:
         async with self.uow:
             user = User(username)
-            await self.uow.users.add(user)
             bot = await self.uow.users.get_bot()
             await user.create_dialog(bot)
+            await self.uow.users.add(user)
             await self.uow.commit()
             return user

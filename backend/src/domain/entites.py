@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import abc
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -15,12 +16,21 @@ class UserType(Enum):
 
 
 @dataclass
-class User:
+class BaseUser(abc.ABC):
+    type: UserType
+    id: uuid.UUID = field(default_factory=uuid.uuid4, init=False)
+    created: datetime = field(default_factory=datetime.utcnow, init=False)
+
+    async def _send_message(self, message: str, dialog: Dialog) -> None:
+        _message = Message(value=message, user=self, dialog=dialog)
+        await dialog.receive_message(_message)
+
+
+@dataclass
+class User(BaseUser):
     username: str
-    type: UserType = UserType.user
     dialog: Dialog | None = None
-    id: uuid.UUID = field(default_factory=uuid.uuid4)
-    created: datetime = field(default_factory=datetime.utcnow)
+    type: UserType = field(default=UserType.user, init=False)
 
     async def create_dialog(self, bot: Bot) -> None:
         if self.dialog is not None:
@@ -33,14 +43,13 @@ class User:
 
         await self._send_message(message, dialog=self.dialog)
 
-    async def _send_message(self, message: str, dialog: Dialog) -> None:
-        await dialog.receive_message(Message(value=message, user=self, dialog=dialog))
-
 
 @dataclass()
-class Bot(User):
-    username: str = field(default="Bot", init=False)
-    type = UserType.bot
+class Bot(BaseUser):
+    BOT_ID = uuid.UUID("00000000-0000-0000-0000-000000000000")
+    id: uuid.UUID = field(default=BOT_ID, init=True)
+    dialogs: list[Dialog] = field(default_factory=list, init=False)
+    type: UserType = field(default=UserType.bot, init=False)
 
     async def reply_to_message(self, message: Message) -> None:
         # echo mode
@@ -52,15 +61,15 @@ class Dialog:
     user: User
     bot: Bot
     id: uuid.UUID = field(default_factory=uuid.uuid4)
-    __messages: list[Message] = field(default_factory=list)
+    _messages: list[Message] = field(default_factory=list)
     created: datetime = field(default_factory=datetime.utcnow)
 
     @property
     def messages(self) -> Sequence[Message]:
-        return self.__messages
+        return self._messages
 
     async def receive_message(self, message: Message) -> None:
-        self.__messages.append(message)
+        self._messages.append(message)
         if message.user == self.user:
             # todo: a better way will send the event to the events queue and not block the user
             #  by waiting for bot reply
@@ -70,7 +79,7 @@ class Dialog:
 @dataclass
 class Message:
     value: str
-    user: User
+    user: BaseUser
     dialog: Dialog
     id: uuid.UUID = field(default_factory=uuid.uuid4)
     created: datetime = field(default_factory=datetime.utcnow)
