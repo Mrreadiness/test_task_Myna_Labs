@@ -10,6 +10,6 @@ class SendMessage(ISendMessage):
 
     async def __call__(self, user_id: uuid.UUID, message: str) -> None:
         async with self.uow:
-            user = await self.uow.user.get_user(user_id)
+            user = await self.uow.users.get_user(user_id)
             await user.send_message(message)
             await self.uow.commit()

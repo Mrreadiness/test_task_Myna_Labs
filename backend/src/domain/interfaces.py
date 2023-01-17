@@ -6,7 +6,7 @@ from src.domain.use_cases.interfaces import IUserRepository
 
 
 class AbstractUnitOfWork(abc.ABC):
-    user: IUserRepository
+    users: IUserRepository
 
     @abc.abstractmethod
     async def commit(self) -> None:
