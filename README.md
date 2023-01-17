@@ -1,5 +1,18 @@
 # Test task for Myna Labs
 
+## Run project
+
+1. Run project by docker compose
+  ```shell
+  docker compose up --build -d 
+  ```
+2. Create database
+  ```shell
+  docker exec test_task_backend python3 src/scripts/create_db.py
+  ```
+3. Go to [Swagger](http://0.0.0.0:8000/docs):
+
+
 ## Backend Structure
 
 - src - Source code of application
