@@ -9,7 +9,7 @@ x-postgres_environment: &postgres_environment
 
 services:
   backend:
-    container_name: test_task_bdackend
+    container_name: test_task_backend
     build:
       context: backend
     command: uvicorn src.api.main:app --reload --host 0.0.0.0 --port 80
